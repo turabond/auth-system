@@ -10,4 +10,9 @@ router.post('/login', validate(authSchema), login);
 router.post('/refresh', refreshToken);
 router.post('/logout', logout);
 
+// Health check endpoint
+router.get('/ping', (_req, res) => {
+  res.json({ message: 'pong' });
+});
+
 export default router;
