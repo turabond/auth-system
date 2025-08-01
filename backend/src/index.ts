@@ -8,6 +8,7 @@ import authRoutes from './routes/auth.routes';
 import userRoutes from './routes/user.routes';
 import profileRoutes from './routes/profile.routes';
 import { errorHandler } from './middleware/error.middleware';
+import { logger } from './utils/logger';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -19,8 +20,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: 'http://localhost:5173', // frontend origin
-    // origin: true, // allow credentials
+    // origin: 'http://localhost:5173', // frontend origin
+    origin: true, // allow credentials
     credentials: true,
   }),
 );
@@ -41,7 +42,7 @@ const start = async () => {
     await connectRedis();
     app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
   } catch (err) {
-    console.error('Failed to start server:', err);
+    logger.error('Failed to start server:', err);
     process.exit(1);
   }
 };

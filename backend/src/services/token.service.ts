@@ -5,10 +5,11 @@ import {
   ITokenRepository,
 } from '../repositories/token.repository';
 import { ITokenService } from '../interfaces/token.interface';
+import { AppError } from '../utils/AppError';
 
 const ACCESS_SECRET = process.env.JWT_ACCESS_SECRET || 'access_secret';
 const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'refresh_secret';
-const ACCESS_EXPIRES_IN = '1m';
+const ACCESS_EXPIRES_IN = '15m';
 const REFRESH_EXPIRES_IN = '30d';
 
 export class TokenService implements ITokenService {
@@ -20,19 +21,19 @@ export class TokenService implements ITokenService {
     return { accessToken, refreshToken };
   }
 
-  validateAccessToken(token: string): TokenPayload | null {
+  validateAccessToken(token: string): TokenPayload {
     try {
       return jwt.verify(token, ACCESS_SECRET) as TokenPayload;
     } catch {
-      return null;
+      throw new AppError('Invalid or expired access token', 401);
     }
   }
 
-  validateRefreshToken(token: string): TokenPayload | null {
+  validateRefreshToken(token: string): TokenPayload {
     try {
       return jwt.verify(token, REFRESH_SECRET) as TokenPayload;
     } catch {
-      return null;
+      throw new AppError('Invalid or expired refresh token', 401);
     }
   }
 
