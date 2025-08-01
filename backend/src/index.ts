@@ -8,39 +8,44 @@ import authRoutes from './routes/auth.routes';
 import userRoutes from './routes/user.routes';
 import profileRoutes from './routes/profile.routes';
 import { errorHandler } from './middleware/error.middleware';
+import { createRateLimitMiddleware } from './middleware/rateLimit.middleware';
 import { logger } from './utils/logger';
 
-// Load environment variables from .env file
 dotenv.config();
 
 const app = express();
 
-// Middlewares
-app.use(express.json());
-app.use(cookieParser());
-app.use(
-  cors({
-    // origin: 'http://localhost:5173', // frontend origin
-    origin: true, // allow credentials
-    credentials: true,
-  }),
-);
+const setupApp = async () => {
+  await connectDB();
+  await connectRedis();
 
-// Routes
-app.use('/api', authRoutes);
-app.use('/api', userRoutes);
-app.use('/api', profileRoutes);
+  app.use(express.json());
+  app.use(cookieParser());
+  app.use(
+    cors({
+      origin: true,
+      credentials: true,
+    }),
+  );
 
-// Global error handler
-app.use(errorHandler);
+  app.use(createRateLimitMiddleware());
+
+  app.use('/api', authRoutes);
+  app.use('/api', userRoutes);
+  app.use('/api', profileRoutes);
+
+  app.use(errorHandler);
+};
 
 const PORT = process.env.PORT || 5001;
 
 const start = async () => {
   try {
-    await connectDB();
-    await connectRedis();
-    app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+    await setupApp();
+
+    app.listen(PORT, () => {
+      console.log(`Server running on http://localhost:${PORT}`);
+    });
   } catch (err) {
     logger.error('Failed to start server:', err);
     process.exit(1);
