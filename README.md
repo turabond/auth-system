@@ -1,4 +1,3 @@
-
 # Auth System – Fullstack Application
 
 This is a fullstack authentication system built with:
@@ -153,9 +152,38 @@ docker compose up -d --build
 
 ---
 
+## 🌱 Seed Script
+
+A seed script is available to create test users in the database.
+
+### 📍 Location
+
+```bash
+backend/src/scripts/seed.ts
+```
+
+### 🧪 What It Does
+
+- Connects to MongoDB
+- Deletes all existing users
+- Creates 3 users:
+  - **admin@example.com** / password: `Admin123!`
+  - **manager@example.com** / password: `Manager123!`
+  - **user@example.com** / password: `User123!`
+
+### ▶️ How to Run
+
+```bash
+docker compose exec backend npx ts-node src/scripts/seed.ts
+```
+
+You must have MongoDB running (e.g. via `docker compose up`) and `.env` properly configured.
+
+---
+
 ## 🧪 Development Notes
 
-- Access token lifetime: `3 minutes`
+- Access token lifetime: `15 minutes`
 - Refresh token lifetime: `30 days`
 - Protected routes implemented with `ProtectedRoute` component
 - Auto-refresh token logic is inside `fetchWrapper.ts`
