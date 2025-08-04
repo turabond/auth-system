@@ -13,7 +13,7 @@ export class UserRepository implements IUserRepository {
   }
 
   async findById(id: string): Promise<IUser | null> {
-    return User.findById(id);
+    return User.findById(id).select('-password');
   }
 
   async create(email: string, hashedPassword: string, role: Role): Promise<IUser> {

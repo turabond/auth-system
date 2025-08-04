@@ -1,9 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import Button from '../../../shared/ui/Button';
-import { useAuthStore } from '../../../entities/auth/model';
-import { authApi } from '../../../entities/auth/api';
+import { Button } from '../../../shared/ui/Button';
+import { useAuthStore, authApi } from '../../../entities/auth';
 
-export default function AuthToggleButton() {
+export const AuthToggleButton = () => {
   const navigate = useNavigate();
   const logout = useAuthStore((state) => state.logout);
   const user = useAuthStore((state) => state.user);
@@ -15,7 +14,6 @@ export default function AuthToggleButton() {
       navigate('/login');
     }
   };
-    
 
   const handleLogin = () => {
     navigate('/login');
@@ -30,4 +28,4 @@ export default function AuthToggleButton() {
       Login
     </Button>
   );
-}
+};

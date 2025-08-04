@@ -10,7 +10,7 @@ export const getProfile = async (req: Request, res: Response, next: NextFunction
 
     const userId = req.user.id;
     const data = await profileService.getProfile(userId);
-    res.status(200).json({ data });
+    res.status(200).json(data);
   } catch (err) {
     next(err instanceof Error ? new AppError(err.message, 400) : err);
   }

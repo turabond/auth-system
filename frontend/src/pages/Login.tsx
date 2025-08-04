@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import Input from '../shared/ui/Input';
-import Button from '../shared/ui/Button';
-import FormError from '../shared/ui/FormError';
-import { authApi } from '../entities/auth/api';
-import { useAuthStore } from '../entities/auth/model';
+import {Input} from '../shared/ui/Input';
+import {Button} from '../shared/ui/Button';
+import {FormError} from '../shared/ui/FormError';
+import { useAuthStore, authApi } from '../entities/auth';
 
-export default function LoginPage() {
+export const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 

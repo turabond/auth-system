@@ -1,4 +1,4 @@
-type ButtonProps = {
+interface ButtonProps {
   children: React.ReactNode;
   isLoading?: boolean;
   disabled?: boolean;
@@ -7,14 +7,14 @@ type ButtonProps = {
   type?: 'button' | 'submit' | 'reset';
 };
 
-export default function Button({
+export const Button = ({
   isLoading = false,
   disabled = false,
   children,
   onClick,
   type = 'button',
   className = '',
-}: ButtonProps) {
+}: ButtonProps) => {
   return (
     <button
       type={type}

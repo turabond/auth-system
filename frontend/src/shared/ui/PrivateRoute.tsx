@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { getAccessToken } from '../../entities/auth/model';
+import { getAccessToken } from '../../entities/auth';
 
-export default function PrivateRoute() {
+export const PrivateRoute = () => {
   const token = getAccessToken();
   return token ? <Outlet /> : <Navigate to="/login" replace />;
-}
+};

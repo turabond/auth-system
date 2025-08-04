@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import { getRole } from '../entities/auth/model'; 
+import { getRole } from '../entities/auth';
 
-export default function DashboardPage() {
+export const DashboardPage = () => {
   const role = getRole();
 
   return (
@@ -41,4 +41,4 @@ export default function DashboardPage() {
       </nav>
     </main>
   );
-}
+};
