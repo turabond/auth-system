@@ -1,13 +1,14 @@
 import { rateLimit } from 'express-rate-limit';
 import { RedisStore } from 'rate-limit-redis';
 import { getRedisClient } from '../config/redis';
+import { RATE_LIMIT_MAX_REQUESTS, RATE_LIMIT_WINDOW_MS } from '../config/constants';
 
 export const createRateLimitMiddleware = () => {
   const redisClient = getRedisClient();
 
   return rateLimit({
-    windowMs: 15 * 60 * 1000,
-    max: 10,
+    windowMs: RATE_LIMIT_WINDOW_MS,
+    max: RATE_LIMIT_MAX_REQUESTS,
     standardHeaders: true,
     legacyHeaders: false,
     store: new RedisStore({

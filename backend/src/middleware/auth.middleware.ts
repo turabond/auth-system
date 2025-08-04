@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { tokenService } from '../services/token.service';
 import { AppError } from '../utils/AppError';
+import { Roles } from '../config/constants';
 
 export const protect = async (req: Request, _res: Response, next: NextFunction) => {
   try {
@@ -24,14 +25,14 @@ export const protect = async (req: Request, _res: Response, next: NextFunction) 
   }
 };
 
-export const restrictTo = (...roles: string[]) => {
+export const restrictTo = (...roles: Roles[]) => {
   return (req: Request, _res: Response, next: NextFunction) => {
     try {
       if (!req.user) {
         throw new AppError('Unauthorized', 401);
       }
 
-      if (!roles.includes(req.user.role)) {
+      if (!roles.includes(req.user.role as Roles)) {
         throw new AppError('Forbidden: insufficient rights', 403);
       }
 
