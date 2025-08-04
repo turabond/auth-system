@@ -6,17 +6,16 @@ import {
   IUserRepository,
   userRepository as userRepositoryInstance,
 } from '../repositories/user.repository';
-import { Role } from '../models/user.model';
 import { tokenService as tokenServiceInstance } from './token.service';
 import { AppError } from '../utils/AppError';
-
+import { Roles } from '../config/constants';
 export class AuthService implements IAuthService {
   constructor(
     private tokenService: ITokenService = tokenServiceInstance,
     private userRepository: IUserRepository = userRepositoryInstance,
   ) {}
 
-  async register(email: string, password: string, role: Role = 'User'): Promise<AuthResponse> {
+  async register(email: string, password: string, role: Roles = Roles.USER): Promise<AuthResponse> {
     const existingUser = await this.userRepository.findByEmail(email);
     if (existingUser) {
       throw new AppError('User already exists', 409);
