@@ -1,4 +1,4 @@
-type InputProps = {
+interface InputProps {
   id: string;
   label: string;
   value: string;
@@ -9,7 +9,7 @@ type InputProps = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export default function Input({
+export const Input = ({
   id,
   label,
   value,
@@ -18,8 +18,7 @@ export default function Input({
   placeholder = '',
   error,
   disabled = false,
-}: InputProps) {
-  return (
+}: InputProps) => (
     <div className="flex flex-col gap-1 w-full">
       <label htmlFor={id} className="font-medium text-gray-700">
         {label}
@@ -48,4 +47,4 @@ export default function Input({
       )}
     </div>
   );
-}
+  

@@ -1,4 +1,4 @@
-import { getAccessToken, setAccessToken } from '../../entities/auth/model';
+import { getAccessToken, setAccessToken } from '../../entities/auth';
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -6,7 +6,7 @@ const defaultHeaders = {
   'Content-Type': 'application/json',
 };
 
-async function request<T>(url: string, options: RequestInit = {}, retry = true): Promise<T> {
+const request = async <T>(url: string, options: RequestInit = {}, retry = true): Promise<T> => {
   const token = getAccessToken();
   const headers = {
     ...defaultHeaders,
@@ -46,7 +46,7 @@ async function request<T>(url: string, options: RequestInit = {}, retry = true):
   }
 
   return res.json();
-}
+};
 
 export const fetchWrapper = {
   get: <T>(url: string) => request<T>(url, { method: 'GET' }),

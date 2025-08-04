@@ -1,5 +1,4 @@
-export default function HomePage() {
-  return (
+export const HomePage = () => (
     <div className="max-w-4xl mx-auto p-6">
       <h1 className="text-4xl font-bold text-center mb-6">Welcome to Auth System</h1>
       <p className="text-center text-gray-600 text-lg">
@@ -7,4 +6,3 @@ export default function HomePage() {
       </p>
     </div>
   );
-}

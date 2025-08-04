@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { to } from '../shared/lib/to';
-import { fetchWrapper } from '../shared/lib/fetchWrapper';
+import { to } from '../shared/api/to';
+import { fetchWrapper } from '../shared/api/fetchWrapper';
 
 type User = {
   _id: string;
@@ -8,19 +8,16 @@ type User = {
   role: 'Admin' | 'Manager' | 'User';
 };
 
-export default function UsersPage() {
+export const UsersPage = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-
-  async function fetchUsers() {
+  const fetchUsers = async () => {
     setLoading(true);
     setError(null);
 
-    const [err, data] = await to<{ items: User[] }>(
-      fetchWrapper.get('/users')
-    );
+    const [err, data] = await to<{ items: User[] }>(fetchWrapper.get('/users'));
 
     if (err) {
       setError(err.message || 'Failed to fetch users');
@@ -29,7 +26,7 @@ export default function UsersPage() {
     }
 
     setLoading(false);
-  }
+  };
 
   useEffect(() => {
     fetchUsers();
@@ -50,9 +47,7 @@ export default function UsersPage() {
         </div>
       )}
 
-      {!loading && !error && users.length === 0 && (
-        <p>No users found.</p>
-      )}
+      {!loading && !error && users.length === 0 && <p>No users found.</p>}
 
       {!loading && users.length > 0 && (
         <table className="min-w-full border border-gray-300 rounded-md overflow-hidden">
@@ -64,11 +59,7 @@ export default function UsersPage() {
           </thead>
           <tbody>
             {users.map((user) => (
-              <tr
-                key={user._id}
-                className="hover:bg-gray-50 focus-within:bg-gray-50"
-                tabIndex={0}
-              >
+              <tr key={user._id} className="hover:bg-gray-50 focus-within:bg-gray-50" tabIndex={0}>
                 <td className="px-4 py-2 border-b border-gray-300">{user.email}</td>
                 <td className="px-4 py-2 border-b border-gray-300 capitalize">{user.role}</td>
               </tr>
@@ -78,4 +69,4 @@ export default function UsersPage() {
       )}
     </main>
   );
-}
+};

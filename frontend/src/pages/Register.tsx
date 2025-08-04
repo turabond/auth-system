@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Input from '../shared/ui/Input';
-import Button from '../shared/ui/Button';
-import FormError from '../shared/ui/FormError';
-import { authApi } from '../entities/auth/api';
+import { Input } from '../shared/ui/Input';
+import { Button } from '../shared/ui/Button';
+import { FormError } from '../shared/ui/FormError';
+import { authApi } from '../entities/auth';
 
-export default function RegisterPage() {
+export const RegisterPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -13,7 +13,7 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  function validate() {
+  const validate = () => {
     if (!email || !password) {
       setError('Please fill all fields');
       return false;
@@ -23,9 +23,9 @@ export default function RegisterPage() {
       return false;
     }
     return true;
-  }
+  };
 
-  async function handleSubmit(e: React.FormEvent) {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
 
@@ -39,9 +39,9 @@ export default function RegisterPage() {
     } else if (data) {
       navigate('/login', { replace: true });
     }
-    
+
     setLoading(false);
-  }
+  };
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-gray-50 p-4">
@@ -64,7 +64,7 @@ export default function RegisterPage() {
             disabled={loading}
           />
         </div>
-      
+
         <div className="mb-5">
           <Input
             id="password"
@@ -92,4 +92,4 @@ export default function RegisterPage() {
       </form>
     </main>
   );
-}
+};

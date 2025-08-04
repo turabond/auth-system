@@ -1,6 +1,6 @@
-import { to } from '../../../shared/lib/to';
-import { fetchWrapper } from '../../../shared/lib/fetchWrapper';
-import { type AuthResponse } from '../types';
+import { to } from '../../../shared/api/to';
+import { fetchWrapper } from '../../../shared/api/fetchWrapper';
+import { type AuthResponse } from '../model';
 
 interface LoginDto {
   email: string;
@@ -10,15 +10,11 @@ interface LoginDto {
 // API endpoints
 export const authApi = {
   login: async (data: LoginDto) => {
-    return await to<AuthResponse>(
-      fetchWrapper.post('/login', data)
-    );
+    return await to<AuthResponse>(fetchWrapper.post('/login', data));
   },
 
   register: async (data: LoginDto) => {
-    return await to<AuthResponse>(
-      fetchWrapper.post('/register', data)
-    );
+    return await to<AuthResponse>(fetchWrapper.post('/register', data));
   },
 
   logout: async () => {
@@ -26,8 +22,6 @@ export const authApi = {
   },
 
   refresh: async () => {
-    return await to<AuthResponse>(
-      fetchWrapper.post('/refresh', {})
-    );
+    return await to<AuthResponse>(fetchWrapper.post('/refresh', {}));
   },
 };
